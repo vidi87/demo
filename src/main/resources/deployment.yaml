@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      name: myapp_4
+      labels:
+        author: vdidk
+        kind: demo-app
+        app: myapp
+    spec:
+      #  hostNetwork: true
+      containers:
+        - name: web
+          image: dlearning87/myapp:4.0.0
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: HOSTNAME
+              value: "myHost"
+            - name: NODENAME
+              value: "myNode"
+            - name: PODNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
