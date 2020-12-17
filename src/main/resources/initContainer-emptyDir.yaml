@@ -5,6 +5,11 @@ metadata:
   name: nginx-helloworld
 spec:
   containers:
+    - name: redis-app
+      image: redis:rc-alpine3.12
+      volumeMounts:
+      - mountPath: "/redis"
+        name: www-data
     - image: nginx
       name: nginx-helloworld
       ports:
